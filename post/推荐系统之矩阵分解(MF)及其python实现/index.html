@@ -1,0 +1,297 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>推荐系统之矩阵分解(MF)及其python实现 | Gridea</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://Yz21.github.io//favicon.ico?v=1565658376063">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Yz21.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yz21.github.io/">
+  <img class="avatar" src="https://Yz21.github.io//images/avatar.png?v=1565658376063" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              推荐系统之矩阵分解(MF)及其python实现
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-07-23
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://Yz21.github.io//tag/z68jcmpyW" class="post-tag">
+                  # 机器学习
+                </a>
+              
+                <a href="https://Yz21.github.io//tag/EWffYRyHc4" class="post-tag">
+                  # python
+                </a>
+              
+                <a href="https://Yz21.github.io//tag/ymE2QH65r6" class="post-tag">
+                  # 推荐系统
+                </a>
+              
+                <a href="https://Yz21.github.io//tag/DVPspKnKQ-" class="post-tag">
+                  # 矩阵分解
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <meta name="referrer" content="no-referrer" />
+<h1 id="前言">前言</h1>
+<p>        目前推荐系统中用的最多的就是矩阵分解方法，在Netflix Prize推荐系统大赛中取得突出效果。以用户-项目评分矩阵为例，矩阵分解就是预测出评分矩阵中的缺失值，然后根据预测值以某种方式向用户推荐。今天以“用户-项目评分矩阵R（M×N）”说明矩阵分解方式的原理以及python实现。</p>
+<!-- more -->
+<h1 id="一-矩阵分解">一、矩阵分解</h1>
+<h2 id="1案例引入">1.案例引入</h2>
+<p>有如下R(5,4)的打分矩阵：（“-”表示用户没有打分）</p>
+<p>其中打分矩阵R(n,m)是n行和m列，n表示user个数，m行表示item个数<br>
+<img src="https://img-blog.csdnimg.cn/20190727200249638.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzQxMzEy,size_16,color_FFFFFF,t_70" alt=""><br>
+那么，如何根据目前的矩阵R（5,4）如何对未打分的商品进行评分的预测（如何得到分值为0的用户的打分值）？</p>
+<p>——矩阵分解的思想可以解决这个问题，其实这种思想可以看作是有监督的机器学习问题（回归问题）。</p>
+<p>矩阵分解的过程中，,矩阵R可以近似表示为矩阵P与矩阵Q的乘积：<br>
+<img src="https://img-blog.csdnimg.cn/2019072720060093.png" alt=""><br>
+矩阵P(n,k)表示n个user和k个特征之间的关系矩阵，这k个特征是一个中间变量，矩阵Q(k,m)的转置是矩阵Q(m,k)，矩阵Q(m,k)表示m个item和K个特征之间的关系矩阵，这里的k值是自己控制的，可以使用交叉验证的方法获得最佳的k值。为了得到近似的R(n,m)，必须求出矩阵P和Q，如何求它们呢？</p>
+<h2 id="2推导步骤">2.推导步骤</h2>
+<ol>
+<li>首先令：<br>
+<img src="https://img-blog.csdnimg.cn/2019072720192687.png" alt="式子1"></li>
+<li>对于式子1的左边项，表示的是r^ 第i行，第j列的元素值，对于如何衡量，我们分解的好坏呢，式子2，给出了衡量标准，也就是损失函数，平方项损失，最后的目标，就是每一个元素(非缺失值)的e(i,j)的总和最小值<br>
+<img src="https://img-blog.csdnimg.cn/20190727202015695.png" alt="式子2"></li>
+<li>使用梯度下降法获得修正的p和q分量：</li>
+</ol>
+<ul>
+<li><strong>求解损失函数的负梯度</strong>：<br>
+<img src="https://img-blog.csdnimg.cn/20190727202620356.png" alt=""></li>
+<li><strong>根据负梯度的方向更新变量</strong>：<br>
+<img src="https://img-blog.csdnimg.cn/20190727202652714.png" alt=""></li>
+</ul>
+<ol start="4">
+<li>
+<p>不停迭代直到算法最终收敛（直到sum(e^2) &lt;=阈值，即梯度下降结束条件：f(x)的真实值和预测值小于自己设定的阈值）</p>
+</li>
+<li>
+<p>为了防止过拟合，增加正则化项</p>
+</li>
+</ol>
+<h2 id="3加入正则项的损失函数求解">3.加入正则项的损失函数求解</h2>
+<ol>
+<li>通常在求解的过程中，为了能够有较好的泛化能力，会在损失函数中加入正则项，以对参数进行约束，加入正则L2范数的损失函数为：<br>
+<img src="https://img-blog.csdnimg.cn/20190727203202194.png" alt=""><br>
+对正则化不清楚的，公式可化为：<br>
+<img src="https://img-blog.csdnimg.cn/20190727203315849.png" alt=""></li>
+<li>使用梯度下降法获得修正的p和q分量：</li>
+</ol>
+<ul>
+<li><strong>求解损失函数的负梯度</strong>：<br>
+<img src="https://img-blog.csdnimg.cn/20190727203526974.png" alt=""></li>
+<li><strong>根据负梯度的方向更新变量</strong>：<br>
+<img src="https://img-blog.csdnimg.cn/20190727203554346.png" alt=""></li>
+</ul>
+<h2 id="4预测">4.预测</h2>
+<p>预测利用上述的过程，我们可以得到矩阵和，这样便可以为用户 i 对商品 j 进行打分：<br>
+<img src="https://img-blog.csdnimg.cn/20190727203756990.png" alt=""></p>
+<h1 id="二-python代码实现">二、python代码实现</h1>
+<p>以下是根据上文的评分例子做的一个矩阵分解算法，并且附有代码详解。</p>
+<pre><code>from math import *
+import numpy
+import matplotlib.pyplot as plt
+
+def matrix_factorization(R,P,Q,K,steps=5000,alpha=0.0002,beta=0.02): #矩阵因子分解函数，steps：梯度下降次数；alpha：步长；beta：β。
+    Q=Q.T                 # .T操作表示矩阵的转置
+    result=[]
+    for step in range(steps): #梯度下降
+        for i in range(len(R)):
+            for j in range(len(R[i])):
+                    eij=R[i][j]-numpy.dot(P[i,:],Q[:,j])       # .DOT表示矩阵相乘
+                    for k in range(K):
+                      if R[i][j]&gt;0:        #限制评分大于零
+                        P[i][k]=P[i][k]+alpha*(2*eij*Q[k][j]-beta*P[i][k])   #增加正则化，并对损失函数求导，然后更新变量P
+                        Q[k][j]=Q[k][j]+alpha*(2*eij*P[i][k]-beta*Q[k][j])   #增加正则化，并对损失函数求导，然后更新变量Q
+        eR=numpy.dot(P,Q)  
+        e=0
+        for i in range(len(R)):
+            for j in range(len(R[i])):
+              if R[i][j]&gt;0:
+                    e=e+pow(R[i][j]-numpy.dot(P[i,:],Q[:,j]),2)      #损失函数求和
+                    for k in range(K):
+                        e=e+(beta/2)*(pow(P[i][k],2)+pow(Q[k][j],2)) #加入正则化后的损失函数求和
+        result.append(e)
+        if e&lt;0.001:           #判断是否收敛，0.001为阈值
+            break
+    return P,Q.T,result
+
+if __name__ == '__main__':   #主函数
+    R=[                 #原始矩阵
+        [5,3,0,1],
+        [4,0,0,1],
+        [1,1,0,5],
+        [1,0,0,4],
+        [0,1,5,4]
+    ]
+    R=numpy.array(R)
+    N=len(R)    #原矩阵R的行数
+    M=len(R[0]) #原矩阵R的列数
+    K=3    #K值可根据需求改变
+    P=numpy.random.rand(N,K) #随机生成一个 N行 K列的矩阵
+    Q=numpy.random.rand(M,K) #随机生成一个 M行 K列的矩阵
+    nP,nQ,result=matrix_factorization(R,P,Q,K)
+    print(R)         #输出原矩阵
+    R_MF=numpy.dot(nP,nQ.T)
+    print(R_MF)      #输出新矩阵
+    #画图
+    plt.plot(range(len(result)),result)
+    plt.xlabel(&quot;time&quot;)
+    plt.ylabel(&quot;loss&quot;)
+    plt.show()
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E4%B8%80-%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3">一、矩阵分解</a>
+<ul>
+<li><a href="#1%E6%A1%88%E4%BE%8B%E5%BC%95%E5%85%A5">1.案例引入</a></li>
+<li><a href="#2%E6%8E%A8%E5%AF%BC%E6%AD%A5%E9%AA%A4">2.推导步骤</a></li>
+<li><a href="#3%E5%8A%A0%E5%85%A5%E6%AD%A3%E5%88%99%E9%A1%B9%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%B1%82%E8%A7%A3">3.加入正则项的损失函数求解</a></li>
+<li><a href="#4%E9%A2%84%E6%B5%8B">4.预测</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-python%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">二、python代码实现</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yz21.github.io//post/暑期培训第一次测试题总结">
+              <h3 class="post-title">
+                暑期培训第一次测试题总结
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://Yz21.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

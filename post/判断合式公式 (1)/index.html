@@ -1,0 +1,296 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python判断离散数学的合式公式 | Gridea</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://Yz21.github.io//favicon.ico?v=1565658376063">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Yz21.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yz21.github.io/">
+  <img class="avatar" src="https://Yz21.github.io//images/avatar.png?v=1565658376063" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Python判断离散数学的合式公式
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-03-17
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://Yz21.github.io//tag/EWffYRyHc4" class="post-tag">
+                  # python
+                </a>
+              
+                <a href="https://Yz21.github.io//tag/YPYswO1f2OL" class="post-tag">
+                  # 离散数学
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <meta name="referrer" content="no-referrer" />
+<h1 id="前言">前言</h1>
+<p>        你没有听错，用python程序来解决离散数学的逻辑推理问题，我当我第一次听老师说的时候也很吃惊（再说上学期的Python学的也不咋地.....😩)，但经老师讲解后才知道，使用python解题不仅效率高，而且准确性也很强的，所以还是有必要学习以下的。</p>
+<!-- more -->
+<h2 id="判断是否为合式公式">判断是否为合式公式</h2>
+<p>        第一个题目就是判断一个公式是否为合式公式，这也是最基础的，因为只有当在输入的合式公式正确的情况下，才能进一步的运算解题，所以先讲解一下怎么判断合式公式。<br>
+        首先要知道<strong>什么是合式公式</strong>？<br>
+(1)原子命题常项或变项是合式公式；<br>
+(2)如果A是合式公式，则（-A）也是合式公式（- 表示非）；<br>
+(3)如果A，B是合式公式，则（A*B）、（A+B）、（A &lt; B）、（ A ~ B）也是合式公式；(此处 * 合取 + 析取 &lt; 代表条件 ~ 代表双条件)<br>
+(4)只有有限次地应用(1)～(3)所包含的命题变元，联结词和括号的符号串才是合式公式。<br>
+        <strong>个人思路</strong>：<br>
+输入字符串，扫描字符串，把所含的各关联词分区出来，在判断每个关联词使用是否正确<br>
+比如不合规则的情况：<br>
+(1) 关联词所处位置不对<br>
+(2) 关联词的连续使用<br>
+(3) 括号不匹配<br>
+(4) ........<br>
+程序中可能会有bug，希望大佬们多多指教</p>
+<h2 id="这道题应该有很多好的方法但我不太会用我这里只能暴力判断了">这道题应该有很多好的方法，但我不太会用，我这里只能暴力判断了。</h2>
+<h4 id="废话不多说直接上代码">废话不多说，直接上代码😎</h4>
+<pre><code>import re
+print(&quot;定义‘!’为否定联结词&quot;)
+print(&quot;定义‘&amp;’为合取联结词&quot;)
+print(&quot;定义‘-’为析取联结词&quot;)
+print(&quot;定义‘&gt;’为蕴含联结词&quot;)
+print(&quot;定义‘~’为等价联结词&quot;)
+print(&quot;如果公式错误，会指出哪里错误；如果公式正确，则什么也不输出&quot;)
+S =input(&quot;请输入需要判断的公式：&quot;)
+T = list(S)
+if S[0] in ['&amp;','-',')','~','&gt;'] :
+    print(&quot;不是合式公式&quot;)
+a ,b,c,d,f =&quot;!&quot; , &quot;&amp;&quot; ,&quot;-&quot; , &quot;&gt;&quot; , &quot;~&quot;
+if a in T:
+        Q = [m.start() for m in re.finditer(a, S)]
+        for i in Q :
+            if S[-1] == '!' :
+                print (&quot;‘!’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[i+1] in ['&amp;','!','-',')','~','&gt;']:
+                print(&quot;‘!’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[i-1] in ['!']:
+                print(&quot;‘!’联结词使用错误，不是合式公式！&quot;)
+                break
+if b in T:
+        W = [m.start() for m in re.finditer(b, S)]
+        for y in W :
+            if S[-1] == '&amp;' :
+                print (&quot;‘&amp;’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[y+1] in ['-',')','~','&gt;','&amp;'] :
+                print(&quot;‘&amp;’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[y-1] in ['-','(','~','&gt;','&amp;'] :
+                print(&quot;‘&amp;’联结词使用错误，不是合式公式&quot;)
+                break
+if c in T:
+        E = [m.start() for m in re.finditer(c, S)]
+        for h in E :
+            if S[-1] == '-' :
+                print(&quot;‘-’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[h+1] in (')','&gt;','~','-') :
+                print(&quot;‘-’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[h-1] in ('&amp;','-','&gt;','~') :
+                print(&quot;‘-’联结词使用错误，不是合式公式&quot;)
+                break
+if d in T:
+        R = [m.start() for m in re.finditer(d, S)]
+        for k in R :
+            if S[-1] == '&gt;' :
+                print (&quot;‘&gt;’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[k+1] in [')','&gt;'] :
+                print(&quot;‘&gt;’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[k-1] in  ['(','&gt;'] :
+                print(&quot;‘&gt;’联结词使用错误，不是合式公式&quot;)
+                break
+if f in T:
+        O = [m.start() for m in re.finditer(f, S)]
+        for v in O :
+            if S[-1] == '~' :
+                print(&quot;‘~’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[v+1] in [')','~'] :
+                print(&quot;‘~’联结词使用错误，不是合式公式&quot;)
+                break
+            if S[v-1] in ['(','~'] :
+                print(&quot;‘~’联结词使用错误，不是合式公式&quot;)
+                break
+if '(' or ')' in S :
+        e = 0
+        klb =[]
+        for i in S :
+            if i == '(':
+                klb.append(i)
+            if i == ')':
+                if len(klb)==0:
+                    e=1
+                    break
+                else :
+                    klb.pop()
+        if len(klb)!=0 :
+            e = 1
+        if e==1:
+            print(&quot;括号使用错误，不是合式公式&quot;)
+
+
+</code></pre>
+<p>        我也是小白，程序哪里可能有些不足之处，请多多指教，如果你有更好的解题方法或思路，可以联系我，大家可以一起学习，一起进步的！😊</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a>
+<ul>
+<li><a href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E5%90%88%E5%BC%8F%E5%85%AC%E5%BC%8F">判断是否为合式公式</a></li>
+<li><a href="#%E8%BF%99%E9%81%93%E9%A2%98%E5%BA%94%E8%AF%A5%E6%9C%89%E5%BE%88%E5%A4%9A%E5%A5%BD%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%86%E6%88%91%E4%B8%8D%E5%A4%AA%E4%BC%9A%E7%94%A8%E6%88%91%E8%BF%99%E9%87%8C%E5%8F%AA%E8%83%BD%E6%9A%B4%E5%8A%9B%E5%88%A4%E6%96%AD%E4%BA%86">这道题应该有很多好的方法，但我不太会用，我这里只能暴力判断了。</a><br>
+*
+<ul>
+<li><a href="#%E5%BA%9F%E8%AF%9D%E4%B8%8D%E5%A4%9A%E8%AF%B4%E7%9B%B4%E6%8E%A5%E4%B8%8A%E4%BB%A3%E7%A0%81">废话不多说，直接上代码😎</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yz21.github.io//post/搭建(2)">
+              <h3 class="post-title">
+                Hexo博客搭建
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://Yz21.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

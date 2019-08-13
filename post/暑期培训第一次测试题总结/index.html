@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>暑期培训第一次测试题总结 | Gridea</title>
+<meta name="description" content="温故而知新" />
+<link rel="shortcut icon" href="https://Yz21.github.io//favicon.ico?v=1565658376063">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Yz21.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Yz21.github.io/">
+  <img class="avatar" src="https://Yz21.github.io//images/avatar.png?v=1565658376063" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              暑期培训第一次测试题总结
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-07-22
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://Yz21.github.io//tag/z68jcmpyW" class="post-tag">
+                  # 机器学习
+                </a>
+              
+                <a href="https://Yz21.github.io//tag/3l8IcqbLsh" class="post-tag">
+                  # 测试题
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <meta name="referrer" content="no-referrer" />
+<h1 id="前言">前言</h1>
+<p>这里是一些暑期培训第一次测试题的部分解释，经过这次测试的摧残，总结备录一下，方便日后回顾复习。</p>
+<!-- more -->
+<h2 id="feeling">Feeling</h2>
+<p>        经过几天的学习，7月22日下午，进行了第一次检测。开始以为会让我们推导一些公式什么的，结果当拿到测试题的时候，一首凉凉送给自己......开始的选择题和填空题还能接受，看到简答题，这都是什么，有种似曾相识的感觉，但就是写不出来。为时四十分钟的考试结束后，不到半个小时成绩就出来了，虽然成绩不那么好，但排名还行，然后学长给我们进行了讲解答疑，发现自己学的有点粗糙，没有注意那些细节性问题和概念，学以致用这方面也是有点差的。</p>
+<h2 id="test-1">Test 1</h2>
+<h3 id="为什么一般需要划分出额外的校验集validation-set用于超参数调整而不选择直接使用测试集test-set">为什么一般需要划分出额外的校验集(validation set)用于超参数调整，而不选择直接使用测试集(test set)?</h3>
+<p>        校验集是用于调整超参数的，从而更好的优化训练模型。测试集是用于在完成神经网络训练过程后,为了客观评价模型在其未见过(未曾影响普通参数和超参数选择)的数据上的性能,而且测试集<strong>不能提出对参数或者超参数的修改意见,只能作为评价网络性能的一个指标</strong>。</p>
+<p>（备注：不清楚这三个数据集概念及其作用的，可看下我以前写的关于这些的一篇文章。传送门：）</p>
+<h2 id="test-2">Test 2</h2>
+<h3 id="批量梯度下降batch-gradient-descent和随机梯度下降stochastic-gradient-descent在应对鞍点时有何不同表现">批量梯度下降(Batch Gradient Descent)和随机梯度下降(Stochastic Gradient Descent)在应对鞍点时有何不同表现？</h3>
+<p>        我们要先知道什么是BGD和SGD，从两者的运算方法上，我们就可以得知不同之处。</p>
+<p>（1）批量梯度下降法（Batch Gradient Descent） ：在更新参数时都使用所有的样本来进行更新。</p>
+<ul>
+<li>优点：<strong>全局最优解</strong>，能保证每一次更新权值，都能降低损失函数；易于并行实现。</li>
+<li>缺点：当样本数目很多时，训练过程会很慢。</li>
+</ul>
+<p>（2）随机梯度下降法（Stochastic Gradient Descent）：在更新参数时都使用一个样本来进行更新。每一次跟新参数都用一个样本，更新很多次。如果样本量很大的情况（例如几十万），那么可能只用其中几万条或者几千条的样本，就已经将参数迭代到最优解了，对比上面的批量梯度下降，迭代一次需要用到十几万训练样本，一次迭代不可能最优，如果迭代10次的话就需要遍历训练样本10次，这种方式计算复杂度太高。</p>
+<ul>
+<li>优点：训练速度快；</li>
+<li>缺点：准确度下降，<strong>并不是全局最优</strong>；不易于并行实现。从迭代的次数上来看，随机梯度下降法迭代的次数较多，在解空间的搜索过程看起来很盲目。噪音很多，使得它并不是每次迭代都向着整体最优化方向。</li>
+</ul>
+<h2 id="test-3">Test 3</h2>
+<h3 id="当一个模型训练完后若在训练集上的loss非常高请问如何在不对代码进行全面排查的前提下以最快速度定位是模型本身的拟合能力不足还是代码的实现存在某种错误">当一个模型训练完后若在训练集上的loss非常高，请问如何在不对代码进行全面排查的前提下，以最快速度定位是模型本身的拟合能力不足还是代码的实现存在某种错误？</h3>
+<p>        废话不多说，直接上图：<br>
+<img src="https://img-blog.csdnimg.cn/20190722174826448.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzQxMzEy,size_16,color_FFFFFF,t_70" alt=""></p>
+<h2 id="test-4">Test 4</h2>
+<h3 id="假设我们在训练一个使用sigmoid激活函数的全连接神经网络-在对其权重进行初始化时为什么一般会倾向于让初始值的绝对值偏小如果需要这样为何不直接使用0进行初始化">假设我们在训练一个使用Sigmoid激活函数的全连接神经网络。在对其权重进行初始化时，为什么一般会倾向于让初始值的绝对值偏小？如果需要这样，为何不直接使用0进行初始化？</h3>
+<p>        对于逻辑回归，把权重初始化为0当然也是可以的，但是对于一个神经网络，如果你把权重或者参数都初始化为0，那么梯度下降将不会起作用。<br>
+        如果权值全初始化为0，则<strong>无法更新权值</strong>。这是由于前向传播中，所有节点输出值均相同，由于此处使用了sigmod激活函数，所以此处所有神经节点输出都为1/2，而在反向传播每个节点输出值对损失函数的偏导时，涉及到对权值相乘后的求和，该项永远为0，故所乘的结果也必然为0，这样在计算权值对算是函数的偏导时，其偏导必然为0，所有权值偏导都为0，那么就不要指望使用梯度下降法能更新权值了，自然神经网络的训练也就无法进行下去了。</p>
+<h2 id="test-5">Test 5</h2>
+<h3 id="在cnn中梯度不稳定指的是什么在神经网络训练过程中为什么会出现梯度消失的问题如何解决">在CNN中梯度不稳定指的是什么？在神经网络训练过程中，为什么会出现梯度消失的问题？如何解决？</h3>
+<p>        神经网络中的梯度不稳定指的是<strong>梯度消失</strong>和<strong>梯度爆炸</strong>问题。<br>
+（备注：对于这两种问题的具体解释和为什么会出现这种问题，以及解决方法，这里不具体讨论了，我会在以后的文章中具体解释到的。）</p>
+<h2 id="test-6">Test 6</h2>
+<h3 id="为什么在神经网络中使用交叉熵而不是均方差作为误差函数">为什么在神经网络中使用交叉熵而不是均方差作为误差函数？</h3>
+<pre><code>1. 神经网络中如果预测值与实际值的误差越大，那么在反向传播训练的过程中，各种参数调整的幅度就要更大，从而使训练更快收敛，如果预测值与实际值的误差小，各种参数调整的幅度就要小，从而减少震荡。
+
+2. 使用平方误差损失函数，误差增大参数的梯度会增大，但是当误差很大时，参数的梯度就会又减小了。
+
+3. 使用交叉熵损失是函数，误差越大参数的梯度也越大，能够快速收敛。
+</code></pre>
+<p>        （备注：对于结论的推导过程会总结在另一篇文章里。）</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a>
+<ul>
+<li><a href="#feeling">Feeling</a></li>
+<li><a href="#test-1">Test 1</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E8%88%AC%E9%9C%80%E8%A6%81%E5%88%92%E5%88%86%E5%87%BA%E9%A2%9D%E5%A4%96%E7%9A%84%E6%A0%A1%E9%AA%8C%E9%9B%86validation-set%E7%94%A8%E4%BA%8E%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E6%95%B4%E8%80%8C%E4%B8%8D%E9%80%89%E6%8B%A9%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%B5%8B%E8%AF%95%E9%9B%86test-set">为什么一般需要划分出额外的校验集(validation set)用于超参数调整，而不选择直接使用测试集(test set)?</a></li>
+</ul>
+</li>
+<li><a href="#test-2">Test 2</a>
+<ul>
+<li><a href="#%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dbatch-gradient-descent%E5%92%8C%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8Dstochastic-gradient-descent%E5%9C%A8%E5%BA%94%E5%AF%B9%E9%9E%8D%E7%82%B9%E6%97%B6%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%E8%A1%A8%E7%8E%B0">批量梯度下降(Batch Gradient Descent)和随机梯度下降(Stochastic Gradient Descent)在应对鞍点时有何不同表现？</a></li>
+</ul>
+</li>
+<li><a href="#test-3">Test 3</a>
+<ul>
+<li><a href="#%E5%BD%93%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%AE%8C%E5%90%8E%E8%8B%A5%E5%9C%A8%E8%AE%AD%E7%BB%83%E9%9B%86%E4%B8%8A%E7%9A%84loss%E9%9D%9E%E5%B8%B8%E9%AB%98%E8%AF%B7%E9%97%AE%E5%A6%82%E4%BD%95%E5%9C%A8%E4%B8%8D%E5%AF%B9%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E5%85%A8%E9%9D%A2%E6%8E%92%E6%9F%A5%E7%9A%84%E5%89%8D%E6%8F%90%E4%B8%8B%E4%BB%A5%E6%9C%80%E5%BF%AB%E9%80%9F%E5%BA%A6%E5%AE%9A%E4%BD%8D%E6%98%AF%E6%A8%A1%E5%9E%8B%E6%9C%AC%E8%BA%AB%E7%9A%84%E6%8B%9F%E5%90%88%E8%83%BD%E5%8A%9B%E4%B8%8D%E8%B6%B3%E8%BF%98%E6%98%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%AD%98%E5%9C%A8%E6%9F%90%E7%A7%8D%E9%94%99%E8%AF%AF">当一个模型训练完后若在训练集上的loss非常高，请问如何在不对代码进行全面排查的前提下，以最快速度定位是模型本身的拟合能力不足还是代码的实现存在某种错误？</a></li>
+</ul>
+</li>
+<li><a href="#test-4">Test 4</a>
+<ul>
+<li><a href="#%E5%81%87%E8%AE%BE%E6%88%91%E4%BB%AC%E5%9C%A8%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8sigmoid%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E7%9A%84%E5%85%A8%E8%BF%9E%E6%8E%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-%E5%9C%A8%E5%AF%B9%E5%85%B6%E6%9D%83%E9%87%8D%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%80%E8%88%AC%E4%BC%9A%E5%80%BE%E5%90%91%E4%BA%8E%E8%AE%A9%E5%88%9D%E5%A7%8B%E5%80%BC%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%80%BC%E5%81%8F%E5%B0%8F%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E8%BF%99%E6%A0%B7%E4%B8%BA%E4%BD%95%E4%B8%8D%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A80%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96">假设我们在训练一个使用Sigmoid激活函数的全连接神经网络。在对其权重进行初始化时，为什么一般会倾向于让初始值的绝对值偏小？如果需要这样，为何不直接使用0进行初始化？</a></li>
+</ul>
+</li>
+<li><a href="#test-5">Test 5</a>
+<ul>
+<li><a href="#%E5%9C%A8cnn%E4%B8%AD%E6%A2%AF%E5%BA%A6%E4%B8%8D%E7%A8%B3%E5%AE%9A%E6%8C%87%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88%E5%9C%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E7%9A%84%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">在CNN中梯度不稳定指的是什么？在神经网络训练过程中，为什么会出现梯度消失的问题？如何解决？</a></li>
+</ul>
+</li>
+<li><a href="#test-6">Test 6</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E4%BD%BF%E7%94%A8%E4%BA%A4%E5%8F%89%E7%86%B5%E8%80%8C%E4%B8%8D%E6%98%AF%E5%9D%87%E6%96%B9%E5%B7%AE%E4%BD%9C%E4%B8%BA%E8%AF%AF%E5%B7%AE%E5%87%BD%E6%95%B0">为什么在神经网络中使用交叉熵而不是均方差作为误差函数？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Yz21.github.io//post/K-最近邻分类算法(KNN)及python实现">
+              <h3 class="post-title">
+                KNN算法及python实现
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://Yz21.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      console.log('section.offsetHeight', section.offsetHeight);
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
